@@ -42,7 +42,43 @@ melt_data <- melt(data, id = id_labels, measure.vars = data_labels)
 
 tidy_data = dcast(melt_data, subject + Activity_Label ~ variable, mean)
 
-write.table(tidy_data, file = "./tidy_data.txt")
+write.table(tidy_data, file = "./tidy_data.txt", row.name = FALSE)
 
-            
-                  
+features <- read.table("./features.txt", col.names = c("n", "feature"))
+extract_features <- grepl("mean|std", features)
+activities <- read.table("./activity_labels.txt", col.names = c("label", "activity"))
+subjectTest <- read.table("./test/subject_test.txt", col.names = "subject")
+xTest <- read.table("./test/X_test.txt", col.names = features$feature)
+xTest = xTest[, extract_features]
+yTest <- read.table("./test/y_test.txt", col.names = "label")
+subjectTrain <- read.table("./train/subject_train.txt", col.names = "subject")
+xTrain <- read.table("./train/X_train.txt", col.names = features$feature)
+xTrain = xTrain[, extract_features]
+yTrain <- read.table("./train/y_train.txt", col.names = "label")
+
+X <- rbind(xTrain, xTest)
+Y <- rbind(yTrain, yTest)
+subject <- rbind(subjectTrain, subjectTest)
+mergedData <- cbind(subject, Y, X)
+mergedData$label <- activities[mergedData$label, 2]
+
+names(mergedData)[2] = "activity"
+names(mergedData) <- gsub("Acc", "Accelerometer", names(mergedData))
+names(mergedData) <- gsub("Gyro", "Gyroscope", names(mergedData))
+names(mergedData) <- gsub("BodyBody", "Body", names(mergedData))
+names(mergedData) <- gsub("Mag", "Magnitude", names(mergedData))
+names(mergedData) <- gsub("^t", "Time", names(mergedData))
+names(mergedData) <- gsub("^f", "Frequency", names(mergedData))
+names(mergedData) <- gsub("tBody", "TimeBody", names(mergedData))
+names(mergedData) <- gsub("-mean()", "Mean", names(mergedData), ignore.case = TRUE)
+names(mergedData) <- gsub("-std()", "STD", names(mergedData), ignore.case = TRUE)
+names(mergedData) <- gsub("-freq()", "Frequency", names(mergedData), ignore.case = TRUE)
+names(mergedData) <- gsub("angle", "Angle", names(mergedData))
+names(mergedData) <- gsub("gravity", "Gravity", names(mergedData))
+
+finalData <- group_by(mergedData, subject, activity)
+summarised <- summarise_all(finalData, funs(mean))
+
+
+
+                
