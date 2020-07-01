@@ -1,15 +1,15 @@
-Codebook
+## Codebook
 
 This is a code book that describes the variables, the data, and any transformations or work that I performed to clean up the data.
 
 
-Dataset Descriptiom
+## Dataset Descriptiom
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
-Data Source
+## Data Source
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-Dataset Information
+## Dataset Information
 
 The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. 
 Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. 
@@ -21,7 +21,7 @@ The sensor acceleration signal, which has gravitational and body motion componen
 The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. 
 From each window, a vector of features was obtained by calculating variables from the time and frequency domain.
 
-Attribute Information
+## Attribute Information
 
 For each record in the dataset it is provided: 
 - Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration. 
@@ -30,7 +30,8 @@ For each record in the dataset it is provided:
 - Its activity label. 
 - An identifier of the subject who carried out the experiment.
 
-Assign each data to variables
+## Assign each data to variables
+
 features <- features.txt
 The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAccXYZ and tGyroXYZ.
 activities <- activity_labels.txt
@@ -48,19 +49,23 @@ train data
 yTrain <- test/y_train.txt 
 train data activities labels
 
-1. Merges the training and the test sets to create one data set
+## 1. Merges the training and the test sets to create one data set
+
 X: merge xTrain and xTest using rbind() 
 Y: merge yTrain and yTest using rbind() 
 subject: subject_train and subject_test using rbind() function
 mergedData: merge subject, X and Y using cbind() function
 
-2. Extracts only the measurements on the mean and standard deviation for each measurement
+## 2. Extracts only the measurements on the mean and standard deviation for each measurement
+
 finalData selects only mean and std measurements
 
-3. Uses descriptive activity names to name the activities in the data set
-Activities names replace the number labels
+## 3. Uses descriptive activity names to name the activities in the data set
 
-4. Appropriately labels the data set with descriptive variable names
+Activities names replace the number labels
+ 
+## 4. Appropriately labels the data set with descriptive variable names
+
 Acc in columnns replaced by Accelerometer
 Gyro in columns replaced by Gyroscope
 BodyBody in columns replaced by Body
@@ -68,6 +73,7 @@ Mag in column’s name replaced by Magnitude
 Columns starting with character f replaced by Frequency
 Columns starting with character t replaced by Time
 
-5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject
+## 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject
+
 finalData is grouped by subject and activity summarised takes the means of each variable for each activity and each subject. 
 
