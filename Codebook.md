@@ -3,7 +3,7 @@
 This is a code book that describes the variables, the data, and any transformations or work that I performed to clean up the data.
 
 
-## Dataset Descriptiom
+## Dataset Description
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
 ## Data Source
